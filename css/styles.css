@@ -1,0 +1,1769 @@
+:root {
+    --primary-color: #1a1a1a;
+    --accent-color: #f5f5f569;
+    --background-color: #f5f5f569;
+    --text-color: #333333;
+    --highlight: #ffffff;
+    --author-color: #000000; /*저자 색상*/
+    --text-background: rgba(255, 255, 255, 0.8);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    line-height: 1.6;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 20px;
+}
+
+
+/* 맨 위에 떠있는 동적 버튼 */
+
+/* 동적 버튼 스타일 */
+
+/* 전체 섹션 스타일 */
+.hero {
+    position: relative; /* hero 섹션을 기준으로 위치 설정 */
+    overflow: hidden; /* 비디오가 섹션을 넘지 않도록 설정 */
+}
+
+/* 비디오 스타일 */
+video {
+    width: 100%; /* 비디오가 섹션에 맞게 조정 */
+    height: auto;
+}
+
+/* 버튼 스타일 */
+.draggable-button {
+    position: absolute;
+    top: 50%; /* 수직 중앙 */
+    left: 50%; /* 수평 중앙 */
+    transform: translate(-50%, -50%); /* 버튼을 중앙으로 이 */
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 50%; /* 원형 모양 */
+    width: 50px; /* 버튼 너비 */
+    height: 50px; /* 버튼 높이 */
+    cursor: pointer;
+    z-index: 1000;
+    transition: background 0.3s;
+    display: flex; /* 텍스트 중앙 정렬을 위해 flex 사용 */
+    justify-content: center; /* 수평 중앙 정렬 */
+    align-items: center; /* 수직 중앙 정렬 */
+    font-size: 14px; /* 텍스트 크기 조정 */
+}
+
+.draggable-button:hover {
+    background-color: #0056b3; /* 호버 시 색상 변경 */
+}
+
+/* 정보 스타일 */
+.info {
+    display: none; /* 기본적으로 숨김 */
+    position: absolute;
+    background: rgba(255, 255, 255, 0.9); /* 반투명 배경 */
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 999; /* 비디오 위에 표시 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Navigation */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.98);
+    padding: 1rem 2rem;
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    text-decoration: none;
+    margin-right: 2rem;
+}
+
+.nav-links {
+    display: flex;
+    gap: 3rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: 1rem;
+    letter-spacing: 1px;
+    position: relative;
+    padding: 0.5rem 0;
+    transition: font-size 0.3s;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 1px;
+    background: var(--accent-color);
+    transition: all 0.3s;
+    transform: translateX(-50%);
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+/* 폰트 크기를 화면 크기에 따라 조정 */
+@media (max-width: 1200px) {
+    .nav-links a {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 900px) {
+    .nav-links a {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .nav-links a {
+        font-size: 0.7rem;
+    }
+}
+
+.search-bar {
+    padding: 0.5rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 50px;
+    width: 200px;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+}
+
+.search-bar:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    width: 250px;
+}
+
+
+
+
+/* Hero Section */
+.hero {
+    height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0; /* 비디오를 배경으로 설정 */
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2; /* 텍스트가 비디오 위에 보이도록 설정 */
+    text-align: center;
+    max-width: 800px;
+    padding: 2rem;
+    background-color: rgba(0, 0, 0, 0.5); /* 부드러운 어두운 배경 */
+    border-radius: 10px; /* 둥근 모서리 */
+}
+
+.tagline {
+    font-size: 2.5rem; /* 태그라인 크기 */
+    margin-bottom: 1.5rem;
+    color: #ffffff; /* 텍스트 색상 */
+    font-weight: 400; /* 폰트 두께 */
+    line-height: 1.4; /* 줄 높이 */
+    transition: color 0.5s, text-shadow 0.5s; /* 색상 및 그림자 전환 효과 */
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.7), 
+                 0 0 10px rgba(0, 255, 255, 0.7), 
+                 0 0 15px rgba(0, 255, 255, 0.7); /* 네온 효과 */
+    filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5)); /* 입체 효과 */
+}
+
+.cta-button {
+    padding: 1rem 2rem; /* 버튼 패딩 */
+    background: #ffcc00; /* 강조 색상 */
+    color: #333; /* 텍스트 색상 */
+    border: none;
+    border-radius: 50px; /* 둥근 버튼 */
+    font-size: 1rem; /* 버튼 폰트 크기 */
+    cursor: pointer;
+    transition: all 0.3s; /* 애니메이션 효과 */
+    letter-spacing: 1px; /* 글자 간격 */
+    margin-top: 1rem; /* 버튼 위 여백 */
+}
+
+.cta-button:hover {
+    transform: translateY(-2px); /* 호버 시 위치 이동 */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* 호버 시 그림자 효과 */
+}
+
+/* Hero Section */
+.tagline {
+    font-size: 2.5rem; /* 태그라인 크기 */
+    margin-bottom: 1.5rem;
+    color: #ffffff; /* 기본 텍스트 색상 */
+    font-weight: 400; /* 폰트 두께 */
+    line-height: 1.4; /* 줄 높이 */
+    transition: color 0.5s, text-shadow 0.5s; /* 색상 및 그림자 전환 효과 */
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.7), 
+                 0 0 10px rgba(0, 255, 255, 0.7), 
+                 0 0 15px rgba(0, 255, 255, 0.7); /* 네온 효과 */
+    filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5)); /* 입체 효과 */
+}
+
+.cta-button {
+    padding: 1rem 2rem; /* 버튼 패딩 */
+    background: #ffcc00; /* 강조 색상 */
+    color: #333; /* 텍스트 색상 */
+    border: none;
+    border-radius: 50px; /* 둥근 버튼 */
+    font-size: 1rem; /* 버튼 폰트 크기 */
+    cursor: pointer;
+    transition: all 0.3s; /* 애니메이션 효과 */
+    letter-spacing: 1px; /* 글자 간격 */
+    margin-top: 1rem; /* 버튼 위 여백 */
+    text-shadow: 0 0 5px rgba(255, 204, 0, 0.7), 
+                 0 0 10px rgba(255, 204, 0, 0.7); /* 버튼 네온 효과 */
+}
+
+.cta-button:hover {
+    transform: translateY(-2px); /* 호버 시 위치 이동 */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* 호버 시 그림자 효과 */
+}
+
+
+/* Courses Section */
+.courses {
+    padding: 8rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.section-title {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 4rem;
+    text-align: center;
+    font-weight: 300;
+}
+
+.course-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.course-card {
+    background: rgba(83, 114, 116, 0.603);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all 0.3s;
+}
+
+.course-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+}
+
+.course-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.course-info {
+    padding: 2rem;
+}
+
+.course-info h3 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+/* Instructor 색상 변경 */
+.instructor {
+    color: rgb(22, 23, 87); /* 남색으로 변경 */
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+
+
+
+
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 20px;
+}
+
+.learning-path-section {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+h2 {
+    color: #333;
+}
+
+.quiz-button {
+    background-color: #007bff; /* 버튼 색상 */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.quiz-button:hover {
+    background-color: #0056b3; /* 호버 시 색상 변경 */
+}
+
+/* Quiz Popup 스타일 */
+.quiz-popup {
+    display: none; /* 기본적으로 숨김 */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* 반투명 배경 */
+    justify-content: center;
+    align-items: center;
+}
+
+.quiz-popup-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+}
+
+.close-button {
+    cursor: pointer;
+    font-size: 1.5rem;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    color: #333;
+}
+
+.options {
+    margin: 20px 0;
+}
+
+.option-button {
+    background-color: #28a745; /* 옵션 버튼 색상 */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 5px 0;
+    width: 100%;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.option-button:hover {
+    background-color: #218838; /* 호버 시 색상 변경 */
+}
+
+.result {
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+
+
+
+
+
+/* Testimonials Section */
+.testimonials {
+    padding: 6rem 2rem; /* 상하, 좌우 패딩 */
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(238, 238, 238, 0.8)); /* 그라데이션 배경 */
+    border-radius: 15px; /* 둥근 모서리 */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+}
+
+.section-title {
+    font-size: 2.5rem; /* 제목 크기 */
+    color: var(--primary-color); /* 주 색상 */
+    margin-bottom: 4rem; /* 아래 여백 */
+    font-weight: 600; /* 두껍게 설정 */
+}
+
+.testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* 반응형 그리드 */
+    gap: 2rem; /* 카  */
+    max-width: 1200px; /* 최대 너비 설정 */
+    margin: 0 auto; /* 중앙 정렬 */
+}
+
+.testimonial-card {
+    padding: 2rem; /* 카드 내부 패딩 */
+    background: rgba(255, 255, 255, 0.9); /* 카드 배경색 */
+    border-radius: 10px; /* 카 둥근 모서리 */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 카드 그림자 효과 */
+    transition: transform 0.3s, box-shadow 0.3s; /* 애니메이션 효과 */
+}
+
+.testimonial-card:hover {
+    transform: translateY(-5px); /* 마우스 오버 시 위치 변화 */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); /* 그림자 효과 강화 */
+}
+
+.testimonial-text {
+    font-size: 1.1rem; /* 본문 크기 */
+    margin-bottom: 1rem; /* 아래 여백 */
+    line-height: 1.6; /* 줄 높이 */
+    color: #333; /* 본문 색상 */
+}
+
+/* 저자 색상 설정 */
+.testimonial-author {
+    color: var(--author-color, var(--accent-color)); /* 기본 색상은 accent-color, 필요 시 변경 가능 */
+    font-size: 0.95rem; /* 저자 크기 */
+    font-weight: 500; /* 저자 두께 */
+}
+
+
+
+
+
+
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.blog-login {
+    width: 90%;
+    max-width: 400px;
+    background: #fff;
+    border-radius: 20px;
+    padding: 2.5rem;
+    position: relative;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    animation: modalFadeIn 0.3s ease-out;
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.login-logo {
+    width: 120px;
+    margin-bottom: 1rem;
+}
+
+.login-header h2 {
+    font-size: 1.8rem;
+    color: #333;
+    margin: 0.5rem 0;
+}
+
+.login-header p {
+    color: #666;
+    font-size: 1rem;
+}
+
+.input-wrapper {
+    position: relative;
+    margin-bottom: 1.5rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.input-wrapper .icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-style: normal;
+    color: #666;
+    z-index: 2;
+    pointer-events: none; /* 아이콘이 입력을 방해하지 않도록 설정 */
+    font-size: 16px; /* 아이콘 크기 조정 */
+}
+
+.input-wrapper input {
+    width: 100%;
+    height: 45px;
+    padding: 0 45px; /* 좌쪽과 오른쪽 패딩을 45px로 수정 */
+    border: 1.5px solid #eee;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    background-color: #fff;
+    position: relative;
+    z-index: 1;
+    text-indent: 25px; /* 텍스트 시작 위치를 오른쪽으로 이동 */
+}
+
+.input-wrapper input::placeholder {
+    color: #999;
+}
+
+.input-wrapper input:focus {
+    outline: none;
+    border-color: #9B8B7C;
+    box-shadow: 0 0 0 3px rgba(155, 139, 124, 0.1);
+}
+
+/* 비밀번호 입력 필드 특별 스타일 */
+.input-wrapper input[type="password"] {
+    letter-spacing: 0.1em; /* 비밀번호 글자 간격 조정 */
+}
+
+/* 비밀번호 토글 버튼 스타일 */
+.password-toggle {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    z-index: 2;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 입력 필드 포커스 시 아이콘 색상 변경 */
+.input-wrapper input:focus + .icon {
+    color: #9B8B7C;
+}
+
+/* 모바일 디바이스를 위한 반응형 조정 */
+@media (max-width: 768px) {
+    .input-wrapper input {
+        font-size: 16px; /* 모바일에서 자동 확대 방지 */
+        padding: 0 40px; /* 모바일에서 패딩 약간 축소 */
+    }
+    
+    .input-wrapper .icon {
+        font-size: 14px; /* 모바일에서 아이콘 크기 축소 */
+    }
+}
+
+.login-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1rem 0;
+    font-size: 0.9rem;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #666;
+}
+
+.forgot-password {
+    color: #9B8B7C;
+    text-decoration: none;
+}
+
+.login-btn {
+    width: 100%;
+    padding: 12px;
+    background: #9B8B7C;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.login-btn:hover {
+    background: #8A7A6C;
+    transform: translateY(-1px);
+}
+
+.social-login {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.social-login p {
+    color: #666;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+.social-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.social-btn {
+    width: 48px;
+    height: 48px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    padding: 0;
+    overflow: hidden;
+}
+
+.social-btn img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.social-btn:hover {
+    transform: scale(1.05);
+}
+
+.signup-link {
+    text-align: center;
+    margin-top: 1.5rem;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.signup-link a {
+    color: #9B8B7C;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/*추천 코스 나선생 글씨 색깔*/
+.nav-links a {
+    text-decoration: none;
+    color: #0000009a;
+    margin: 0 1rem;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    position: relative;
+    padding: 0.5rem 0;
+    transition: font-size 0.3s;
+}
+
+.search-bar {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+
+
+/* 로그인 모달 스타일 */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.blog-login {
+    width: 90%;
+    max-width: 400px;
+    background: #fff;
+    border-radius: 16px;
+    padding: 2rem;
+    position: relative;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.close-btn {
+    position: absolute;
+    right: 1.5rem;
+    top: 1.5rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #666;
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.login-header h2 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.login-header p {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+}
+
+.input-group input:focus {
+    border-color: #666;
+    outline: none;
+}
+
+.password-wrapper {
+    position: relative;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    padding: 0.25rem;
+}
+
+.login-btn {
+    width: 100%;
+    padding: 0.8rem;
+    background: #333;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.login-btn:hover {
+    background: #444;
+}
+
+.login-footer {
+    text-align: center;
+    margin-top: 1.5rem;
+}
+
+.forgot-link {
+    color: #666;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.signup-text {
+    margin-top: 1rem;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.signup-text a {
+    color: #333;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+
+
+
+
+/* Navigation 스타일 */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/*메뉴 바 글씨*/
+.nav-links a {          
+    margin: 0 1rem;
+    text-decoration: none;
+    color: #333;
+}
+
+
+
+
+
+/* 검색 컨테이너 스타일 */
+.search-container {
+    display: flex;
+    align-items: center;
+    max-width: 500px; /* 최대 너비 설정 */
+    margin: 20px auto; /* 중앙 정렬 */
+    border-radius: 30px; /* 둥근 모서리 */
+    overflow: hidden; /* 자식 요소가 넘칠 경우 숨김 */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+}
+
+/* 검색 바 스타일 업데이트 */
+.search-bar {
+    padding: 0.8rem 1.2rem;
+    border: 2px solid rgba(155, 139, 124, 0.2);
+    border-radius: 50px;
+    width: 220px;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.search-bar:focus {
+    outline: none;
+    width: 280px;
+    border-color: #9B8B7C;
+    box-shadow: 0 4px 15px rgba(155, 139, 124, 0.2);
+}
+
+/* 검색 버튼 스타일 업데이트 */
+.search-button {
+    background: linear-gradient(135deg, #9B8B7C, #7f6c5c);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(155, 139, 124, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.search-button:hover {
+    background: linear-gradient(135deg, #8a7a6c, #6b5a4c);
+    box-shadow: 0 4px 15px rgba(155, 139, 124, 0.4);
+}
+
+.search-button:active {
+    background: linear-gradient(135deg, #7f6c5c, #6b5a4c);
+    box-shadow: 0 2px 8px rgba(155, 139, 124, 0.3);
+}
+
+/* 물결 효과 애니메이션 */
+.search-button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 150%;
+    height: 150%;
+    background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 60%);
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    transition: transform 0.5s ease-out, opacity 0.3s ease-out;
+}
+
+.search-button:hover::after {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+}
+
+/* 반짝임 효과 */
+.search-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -75%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.4),
+        transparent
+    );
+    transform: skewX(-25deg);
+    transition: 0.75s;
+}
+
+.search-button:hover::before {
+    animation: shine 1.5s infinite;
+}
+
+@keyframes shine {
+    100% {
+        left: 125%;
+    }
+}
+
+/* X 버튼 스타일 */
+.clear-button {
+    background-color: transparent; /* 투명 배경 */
+    color: #dc3545; /* 글자색 */
+    border: none; /* 테두리 제거 */
+    padding: 12px; /* 패딩 */
+    cursor: pointer; /* 커서 모양 */
+    transition: color 0.3s; /* 색상 변화에 대한 트랜지션 */
+}
+
+/* X 버튼 호버 스타일 */
+.clear-button:hover {
+    color: #c82333; /* 호버 시 색상 변화 */
+}
+
+/* 검색 결과 스타일 */
+.search-results {
+    max-width: 500px; /* 최대 너비 설정 */
+    margin: 20px auto; /* 중앙 정렬 */
+    padding: 10px; /* 패딩 */
+    border: 1px solid #ccc; /* 테두리 */
+    border-radius: 5px; /* 둥근 모서리 */
+    background-color: #f9f9f9; /* 배경색 */
+    display: none; /* 기본적으로 숨김 */
+}
+
+
+
+
+
+.login-button {
+    padding: 0.8rem 1.5rem;
+    background: linear-gradient(135deg, #9B8B7C, #7f6c5c);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(155, 139, 124, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.login-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(155, 139, 124, 0.4);
+    background: linear-gradient(135deg, #7f6c5c, #9B8B7C);
+}
+
+.login-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(155, 139, 124, 0.3);
+}
+
+.login-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    transition: 0.5s;
+}
+
+.login-button:hover::before {
+    left: 100%;
+}
+
+
+
+/* Map Section */
+.map {
+    width: 100%;
+    height: 400px;
+    margin: 2rem 0;
+}
+
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+header {
+    background: #9B8B7C; /* 변경된 색상 */
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+}
+
+h2 {
+    margin: 20px 0;
+}
+
+p {
+    text-align: center;
+    margin: 10px 0;
+}
+
+a {
+    color: #9B8B7C; /* 변경된 색상 */
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: #7f6c5c; /* 호버 색상 */
+}
+
+#map {
+    width: 100%;
+    height: 500px;
+    border: 2px solid #9B8B7C; /* 변경된 색상 */
+    border-radius: 10px;
+    margin: 20px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+footer {
+    text-align: center;
+    padding: 10px 0;
+    background: #9B8B7C; /* 변경된 색상 */
+    color: white;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    margin-top: 20px;
+}
+
+
+
+/* Footer */
+.footer {
+    background: var(--primary-color);
+    color: white;
+    padding: 4rem 2rem;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column; /* 세로 방향으로 정렬 */
+    align-items: center; /* 중앙 정렬 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+}
+
+.footer-info {
+    margin-bottom: 2rem; /* 정보와 링크 사이의 여백 */
+}
+
+.small-text {
+    font-size: 0.7rem; /* 글씨 크기 조정 */
+    margin: 0.5rem 0; /* 정��� 간의 간격 */
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center; /* 링크 중앙 정렬 */
+    margin-bottom: 2rem; /* 링크와 버튼 사이의 여백 */
+}
+
+.footer-links a {
+    color: var(--highlight);
+    text-decoration: none;
+    margin: 0 1rem; /* 링크 간 간격 */
+    font-size: 0.9rem;
+    position: relative; /* 포지션 설정 */
+    transition: color 0.3s;
+}
+
+.footer-links a:hover {
+    color: rgb(150, 150, 150);
+}
+
+.footer-links a::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: white; /* 하단 밑줄 색상 */
+    transform: scaleX(0); /* 초기 상태에서 보이지 않음 */
+    transition: transform 0.3s; /* 애니메이션 효과 */
+    margin-top: 5px;
+}
+
+.footer-links a:hover::after {
+    transform: scaleX(1); /* 호버 시 밑줄 나타남 */
+}
+
+.cta-button {
+    background: #333; /* 다크 그레이 상 */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s; /* 버튼 애니메이션 효과 */
+    position: relative; /* 상대 치 설정 */
+    margin-top: 2rem; /* 위쪽 여백 추가 */
+}
+
+.cta-button:hover {
+    background: #555; /* 호버 시 밝은 그레이로 변경 */
+    color: white; /* 글자색 유지 */
+    transform: scale(1.05); /* 버튼 확대 효과 */
+}
+
+
+
+/* Navigation 스일 업데이트 */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.98);
+    padding: 1rem 2rem;
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* 햄버거 메뉴 아이콘 스타일 업데이트 */
+.menu-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    position: relative;
+    z-index: 1001;
+}
+
+.menu-toggle:hover {
+    background-color: rgba(155, 139, 124, 0.1);
+}
+
+.menu-toggle span {
+    display: block;
+    width: 25px;
+    height: 2px;
+    margin: 5px 0;
+    background-color: #9B8B7C;
+    transition: all 0.4s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+}
+
+/* 햄버거 메뉴 활성화 애니메이션 */
+.menu-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 6px);
+    background-color: #7f6c5c;
+}
+
+.menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+    transform: scale(0);
+}
+
+.menu-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -6px);
+    background-color: #7f6c5c;
+}
+
+/* 모바일 네비게이션 메뉴 스타일 업데이트 */
+@media screen and (max-width: 768px) {
+    .menu-toggle {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100vh;
+        width: 300px;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        flex-direction: column;
+        padding: 80px 40px;
+        transition: all 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-links.active {
+        right: 0;
+        transform: translateX(0);
+    }
+
+    .nav-links a {
+        margin: 20px 0;
+        font-size: 1.1rem;
+        opacity: 0;
+        transform: translateX(50px);
+        transition: all 0.4s ease;
+        position: relative;
+    }
+
+    .nav-links.active a {
+        opacity: 1;
+        transform: translateX(0);
+        transition-delay: 0.3s;
+    }
+
+    /* 메뉴 항목 호버 효과 */
+    .nav-links a::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: linear-gradient(90deg, #9B8B7C, transparent);
+        transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover::after {
+        width: 100%;
+    }
+
+    /* 메뉴 오버레이 */
+    .menu-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(3px);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        z-index: 999;
+    }
+
+    .menu-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* 각 메뉴 항목 지연 애니메이션 */
+    .nav-links a:nth-child(1) { transition-delay: 0.1s; }
+    .nav-links a:nth-child(2) { transition-delay: 0.2s; }
+    .nav-links a:nth-child(3) { transition-delay: 0.3s; }
+    .nav-links a:nth-child(4) { transition-delay: 0.4s; }
+    .nav-links a:nth-child(5) { transition-delay: 0.5s; }
+}
+
+/* 더 작은 화면 대응 추가 스타일 */
+@media screen and (max-width: 480px) {
+    .nav-links {
+        width: 85%;
+        padding: 70px 30px;
+    }
+
+    .menu-toggle span {
+        width: 22px;
+    }
+}
+
+/* 비밀번호 입력 컨테이너 스타일 */
+.password-container {
+    position: relative;
+    width: 100%;
+    margin: 0.8rem 0;
+}
+
+/* 비밀번호 토글 버튼 스타일 */
+.password-toggle {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    padding: 6px;
+    cursor: pointer;
+    color: #9B8B7C;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    opacity: 0.7;
+}
+
+.password-toggle:hover {
+    background: rgba(155, 139, 124, 0.08);
+    color: #7f6c5c;
+    opacity: 1;
+}
+
+.password-toggle:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+/* 비밀번호 입력 필드 스타일 */
+.password-container input[type="password"],
+.password-container input[type="text"] {
+    width: 100%;
+    padding: 12px 40px 12px 12px;
+    border: 1.5px solid #eee;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    background: #fff;
+}
+
+.password-container input:focus {
+    outline: none;
+    border-color: #9B8B7C;
+    box-shadow: 0 0 0 3px rgba(155, 139, 124, 0.1);
+}
+
+.password-container input:focus + .password-toggle {
+    opacity: 1;
+}
+
+
+
+
+/* 비밀번호 입력 컨테이너 스타일 */
+.password-container {
+    position: relative;
+    width: 100%;
+    margin: 0.8rem 0;
+}
+
+/* 비밀번호 표글 버튼 스타일 */
+.password-toggle {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    padding: 6px;
+    cursor: pointer;
+    color: #9B8B7C;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    opacity: 0.7;
+}
+
+.password-toggle:hover {
+    background: rgba(155, 139, 124, 0.08);
+    color: #7f6c5c;
+    opacity: 1;
+}
+
+.password-toggle:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+/* 비밀번호 입력 필드 스타일 */
+.password-container input[type="password"],
+.password-container input[type="text"] {
+    width: 100%;
+    padding: 12px 40px 12px 12px;
+    border: 1.5px solid #eee;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    background: #fff;
+}
+
+.password-container input:focus {
+    outline: none;
+    border-color: #9B8B7C;
+    box-shadow: 0 0 0 3px rgba(155, 139, 124, 0.1);
+}
+
+.password-container input:focus + .password-toggle {
+    opacity: 1;
+}
+
+
+
+
+/* Contact Modal 스타일 */
+.contact-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    align-items: center;
+    justify-content: center;
+}
+
+.contact-modal.show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+}
+
+.contact-form {
+    width: 90%;
+    max-width: 550px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 24px;
+    padding: 3rem;
+    position: relative;
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.1),
+        0 0 0 1px rgba(255, 255, 255, 0.5);
+    transform: translateY(30px);
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.contact-modal.show .contact-form {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.contact-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.contact-header h2 {
+    font-size: 2.2rem;
+    color: #333;
+    margin-bottom: 0.8rem;
+    font-weight: 700;
+}
+
+.contact-header p {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+.form-group {
+    margin-bottom: 1.8rem;
+    position: relative;
+}
+
+.form-input {
+    width: 100%;
+    padding: 1rem 1.2rem;
+    border: 2px solid #eee;
+    border-radius: 12px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.form-input:focus {
+    border-color: #9B8B7C;
+    box-shadow: 0 0 0 4px rgba(155, 139, 124, 0.1);
+    outline: none;
+}
+
+textarea.form-input {
+    min-height: 150px;
+    resize: vertical;
+}
+
+.contact-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.contact-btn {
+    flex: 1;
+    padding: 1rem;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.contact-btn.submit {
+    background: #9B8B7C;
+    color: white;
+}
+
+.contact-btn.cancel {
+    background: #f1f3f5;
+    color: #495057;
+}
+
+.contact-btn:hover {
+    transform: translateY(-2px);
+}
+
+.contact-btn:active {
+    transform: translateY(0);
+}
+
+.close-btn {
+    position: absolute;
+    right: 1.5rem;
+    top: 1.5rem;
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: #f1f3f5;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: #495057;
+}
+
+.close-btn:hover {
+    background: #e9ecef;
+    transform: rotate(90deg);
+}
+
+@media (max-width: 768px) {
+    .contact-form {
+        padding: 2rem;
+        margin: 1rem;
+    }
+    
+    .contact-buttons {
+        flex-direction: column;
+    }
+    
+    .contact-btn {
+        width: 100%;
+    }
+}
+
+/* 로딩 애니메이션 */
+@keyframes spinner {
+    to { transform: rotate(360deg); }
+}
+
+.loading-spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid #fff;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spinner 0.8s linear infinite;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+/* Map Buttons 스타일 */
+.map-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 2rem;
+    padding: 0 1rem;
+}
+
+.map-button {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(155, 139, 124, 0.3);
+    border-radius: 12px;
+    color: #333;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1rem;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(10px);
+}
+
+.map-icon {
+    margin-right: 0.8rem;
+    font-size: 1.2rem;
+}
+
+.map-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    border-color: rgba(155, 139, 124, 0.5);
+}
+
+.map-button:active {
+    transform: translateY(0);
+}
+
+.hover-effect {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255, 255, 255, 0.6),
+        transparent
+    );
+    transform: translateX(-100%);
+    transition: 0.5s;
+}
+
+.map-button:hover .hover-effect {
+    transform: translateX(100%);
+}
+
+/* 반응형 디자인 */
+@media screen and (max-width: 768px) {
+    .map-buttons {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .map-button {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* 구글 지도 버튼 특별 스타일 */
+.map-button.google:hover {
+    background: linear-gradient(135deg, #4285f4, #34a853);
+    color: white;
+    border-color: transparent;
+}
+
+/* 네이버 지도 버튼 특별 스타일 */
+.map-button.naver:hover {
+    background: linear-gradient(135deg, #03c75a, #00b843);
+    color: white;
+    border-color: transparent;
+}

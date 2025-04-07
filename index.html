@@ -1,0 +1,1473 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <title>한불 언어마을 - Ko.planet</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/styles.css">
+    </head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <video autoplay muted loop>
+            <source src="mp4/video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="hero-content">
+            <h1 class="tagline" id="rotating-tagline">자신의 속도에 맞춰 배우세요</h1>
+            <button class="cta-button">더 알아보기</button>
+        </div>
+        <button id="draggableButton" class="draggable-button">News</button>
+        <div id="info" class="info">
+            <h2>Weekly News</h2>
+            <p>Today: No Class</p>
+        </div>
+    </section>
+
+    <script src="js/scripts.js"></script>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="#" class="logo">
+            <img src="logo/Ko.planet.png" style="height: 50px;">
+        </a>
+        
+        <div class="nav-links">
+            <a href="#hero" data-lang-key="nav-news">News</a>
+            <a href="#courses" data-lang-key="nav-courses">Learning Languages</a>
+            <a href="#testimonials" data-lang-key="nav-community">Community</a>
+            <a href="#location" data-lang-key="nav-location">How to get here</a>
+        </div>
+
+        <div class="desktop-language-selector">
+            <div class="language-buttons">
+                <button class="language-btn active" data-lang="ko">한국어</button>
+                <button class="language-btn" data-lang="fr">Français</button>
+                <button class="language-btn" data-lang="en">English</button>
+            </div>
+        </div>
+
+        <div class="search-container">
+            <form id="desktopSearchForm" onsubmit="event.preventDefault(); handleDesktopSearch();">
+                <div class="search-wrapper">
+                    <input type="text" class="search-bar" placeholder="Search">
+                    <button type="submit" class="search-button">🔍</button>
+                </div>
+            </form>
+            <div id="desktop-search-results" class="desktop-search-results"></div>
+        </div>
+            
+        <button class="login-button" data-lang-key="login-button" onclick="openLoginModal()">Login</button>
+
+        <!-- 모바일 햄버거 메뉴 버튼 -->
+        <div class="mobile-menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- Menu Overlay -->
+    <div class="menu-overlay"></div>
+
+    <!-- 모바일 사이드 메뉴 -->
+    <div class="mobile-side-menu">
+        <div class="mobile-menu-header">
+            <img src="logo/Ko.planet.png" alt="Ko.planet 로고" class="mobile-menu-logo">
+            <button class="mobile-menu-close">×</button>
+        </div>
+        
+        <div class="mobile-menu-content">
+            <!-- 모바일 검색 컨테이너 -->
+            <div class="mobile-search-container">
+                <form id="mobileSideSearchForm" onsubmit="event.preventDefault(); handleMobileSearch();">
+                    <div class="mobile-search-wrapper">
+                        <input type="text" class="mobile-search-bar" placeholder="검색어를 입력하세요">
+                        <button type="submit" class="mobile-search-button">🔍</button>
+                    </div>
+                </form>
+                <div id="mobile-search-results" class="mobile-search-results"></div>
+            </div>
+
+            <!-- 모바일 메뉴 링크 -->
+            <div class="mobile-menu-links">
+                <a href="#hero" data-lang-key="nav-news">
+                    <i class="icon">🏠</i> 뉴스
+                </a>
+                <a href="#courses" data-lang-key="nav-courses">
+                    <i class="icon">📚</i> 학습 코스
+                </a>
+                <a href="#testimonials" data-lang-key="nav-community">
+                    <i class="icon">👥</i> 커뮤니티
+                </a>
+                <a href="#location" data-lang-key="nav-location">
+                    <i class="icon">📍</i> 오시는 길
+                </a>
+            </div>
+            
+            <!-- 모바일 메뉴 액션 -->
+            <div class="mobile-menu-actions">
+                <button class="mobile-login-btn" onclick="openLoginModal()" data-lang-key="login-button">
+                    <i class="icon">👤</i> 로그인
+                </button>
+                <button class="mobile-signup-btn" onclick="showSignup()" data-lang-key="signup-button">
+                    <i class="icon">📝</i> 회원가입
+                </button>
+            </div>
+            
+            <!-- 모바일 언어 선택 -->
+            <div class="mobile-menu-language">
+                <label>언어 선택:</label>
+                <div class="language-buttons">
+                    <button class="language-btn active" data-lang="ko">한국어</button>
+                    <button class="language-btn" data-lang="fr">Français</button>
+                    <button class="language-btn" data-lang="en">English</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mobile-menu-footer">
+            <p>© 2024 Ko.planet</p>
+        </div>
+    </div>
+
+    <!-- 나머지 컨텐츠... -->
+</body>
+</html>
+
+<!-- 로그인 모달 -->
+<div class="modal" id="loginModal">
+    <div class="modal-content blog-login">
+        <button type="button" class="close-btn" onclick="closeLoginModal()">×</button>
+        <div class="login-header">
+            <img src="logo/Ko.planet.png" alt="Ko.planet" class="login-logo">
+            <h2>환영합니다!</h2>
+            <p>한불 언어마을과 함께 시작하세요</p>
+        </div>
+        <form onsubmit="event.preventDefault(); login();">
+            <div class="input-group">
+                <div class="input-wrapper">
+                    <i class="icon">👤</i>
+                    <input type="text" id="username" placeholder="아이디" required>
+                </div>
+                <div class="input-wrapper">
+                    <i class="icon">🔒</i>
+                    <input type="password" id="password" placeholder="비밀번호" required>
+                    <button type="button" class="password-toggle" onclick="togglePassword()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="login-options">
+                <label class="remember-me">
+                    <input type="checkbox" id="rememberMe">
+                    <span>자동 로그인</span>
+                </label>
+                <a href="#" class="forgot-password">비밀번호 찾기</a>
+            </div>
+            <button type="submit" class="login-btn">로그인</button>
+            <div class="social-login">
+                <p>간편 로그인</p>
+                <div class="social-buttons">
+                    <button type="button" class="social-btn kakao" onclick="socialLogin('kakao')">
+                        <img src="logo/kakaotalk.png" alt="카카오 로그인">
+                    </button>
+                    <button type="button" class="social-btn naver" onclick="socialLogin('naver')">
+                        <img src="logo/naver.png" alt="네이버 로그인">
+                    </button>
+                </div>
+            </div>
+        </form>
+        <div class="signup-link">
+            처음이신가요? <a href="#" onclick="showSignup()">회원가입</a>
+        </div>
+    </div>
+</div>
+
+<script src="js/scripts.js"></script>
+
+<!-- Courses Section -->
+<section class="courses" id="courses">
+    <h2 class="section-title">추천 코스</h2>
+    <div class="course-grid">
+        <div class="course-card">
+            <img src="D:\Koplanet\Ko.planet.png" alt="Course 1" class="course-image">
+            <div class="course-info">
+                <h3>프랑스어 기초</h3>
+                <p class="instructor">나선생</p>
+                <p>일상적인 대화부터 시작하는<br>프랑스어의 첫걸음</p>
+            </div>
+        </div>
+        <div class="course-card">
+            <img src="D:\Koplanet\Ko.planet.png" alt="Course 2" class="course-image">
+            <div class="course-info">
+                <h3>한국어 중급</h3>
+                <p class="instructor">나선생</p>
+                <p>한국 문화와 함께 배우는 실용 한국어</p>
+            </div>
+        </div>
+        <div class="course-card">
+            <img src="D:\Koplanet\Ko.planet.png" alt="Course 3" class="course-image">
+            <div class="course-info">
+                <h3>문화 교류</h3>
+                <p class="instructor">나선생</p>
+                <p>예술과 문학으로 만나는 양국의 문화</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Quiz Section -->
+<section class="quiz-section">
+    <div class="quiz-content">
+        <h2>프랑스어 퀴즈</h2>
+        <div class="quiz-question">
+            <p>다음 프랑스어 문장의 한국어 번역은 무엇인가요?</p>
+            <p class="french-sentence">"Bonjour, comment ça va?"</p>
+        </div>
+        <div class="options">
+            <button class="option-button" data-correct="true">1. 안녕하세요, 잘 지내세요?</button>
+            <button class="option-button">2. 안녕, 어떻게 지내니?</button>
+            <button class="option-button">3. 안녕하세요, 어떻게 지내세요?</button>
+            <button class="option-button">4. 안녕, 잘 지내세요?</button>
+        </div>
+        <p id="result" class="result"></p>
+        <button id="refresh-button" class="refresh-button" style="display: none;">
+            <span class="refresh-icon">↺</span> 다시 풀기
+        </button>
+    </div>
+</section>
+
+<style>
+    .quiz-section {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(10px);
+        padding: 4rem 2rem;
+        border-radius: 24px;
+        box-shadow: 
+            0 10px 30px rgba(0, 0, 0, 0.1),
+            0 1px 8px rgba(0, 0, 0, 0.05);
+        margin: 2rem auto;
+        max-width: 800px;
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        transform-style: preserve-3d;
+        perspective: 1000px;
+    }
+    
+    .quiz-content {
+        transform: translateZ(20px);
+    }
+    
+    .french-sentence {
+        font-size: 1.6rem;
+        color: #1a1a1a;
+        font-weight: 600;
+        margin: 1.5rem 0;
+        padding: 1rem 2rem;
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        border-radius: 16px;
+        box-shadow: 
+            0 4px 15px rgba(0, 0, 0, 0.05),
+            inset 0 -2px 4px rgba(0, 0, 0, 0.03);
+        transform: translateZ(30px);
+    }
+    
+    .options {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+    }
+    
+    .option-button {
+        padding: 1.2rem 2rem;
+        width: 85%;
+        max-width: 500px;
+        font-size: 1.1rem;
+        border: none;
+        border-radius: 16px;
+        background: linear-gradient(145deg, #ffffff, #f0f0f0);
+        color: #333;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 
+            5px 5px 10px #d1d1d1,
+            -5px -5px 10px #ffffff;
+        position: relative;
+        transform-style: preserve-3d;
+    }
+    
+    .option-button:hover:not(:disabled) {
+        transform: translateY(-4px) translateZ(10px);
+        box-shadow: 
+            8px 8px 15px #d1d1d1,
+            -8px -8px 15px #ffffff;
+    }
+    
+    .option-button:active:not(:disabled) {
+        transform: translateY(-2px) translateZ(5px);
+        box-shadow: 
+            3px 3px 8px #d1d1d1,
+            -3px -3px 8px #ffffff;
+    }
+    
+    .option-button.correct {
+        background: linear-gradient(145deg, #a8e6cf, #88d7b5);
+        color: #1a472a;
+        box-shadow: 
+            5px 5px 10px #88d7b5,
+            -5px -5px 10px #a8e6cf;
+    }
+    
+    .option-button:disabled {
+        cursor: not-allowed;
+        opacity: 0.8;
+        transform: translateZ(0);
+    }
+    
+    .result {
+        margin-top: 2.5rem;
+        font-size: 1.3rem;
+        font-weight: 600;
+        min-height: 1.5em;
+        padding: 1rem;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(5px);
+        transform: translateZ(15px);
+    }
+    
+    .refresh-button {
+        margin: 2rem auto 0;
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
+        border: none;
+        border-radius: 16px;
+        background: linear-gradient(145deg, #6c5ce7, #5b4cc4);
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 
+            5px 5px 10px #d1d1d1,
+            -5px -5px 10px #ffffff;
+        transform-style: preserve-3d;
+        display: block;
+        margin: 2rem auto 0;
+    }
+    
+    .refresh-button:hover {
+        transform: translateY(-4px) translateZ(10px);
+        background: linear-gradient(145deg, #7d6ef8, #6c5ce7);
+        box-shadow: 
+            8px 8px 15px #d1d1d1,
+            -8px -8px 15px #ffffff;
+    }
+    
+    .refresh-icon {
+        display: inline-block;
+        margin-right: 8px;
+        font-size: 1.2rem;
+    }
+    
+    @keyframes float {
+        0% { transform: translateZ(20px); }
+        50% { transform: translateZ(30px); }
+        100% { transform: translateZ(20px); }
+    }
+    
+    .quiz-content {
+        animation: float 6s ease-in-out infinite;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const resultText = document.getElementById("result");
+        const refreshButton = document.getElementById("refresh-button");
+    
+        document.querySelectorAll(".option-button").forEach(button => {
+            button.addEventListener("click", function() {
+                const isCorrect = this.hasAttribute("data-correct");
+                
+                resultText.style.transform = "translateZ(40px)";
+                resultText.style.transition = "all 0.5s cubic-bezier(0.4, 0, 0.2, 1)";
+                resultText.textContent = isCorrect 
+                    ? "✨ 정답입니다! 잘 하셨어요! ✨" 
+                    : "😅 틀렸습니다. 다시 시도해보세요.";
+                resultText.style.color = isCorrect ? "#2ecc71" : "#e74c3c";
+                
+                document.querySelectorAll(".option-button").forEach(btn => {
+                    btn.disabled = true;
+                    if (btn.hasAttribute("data-correct")) {
+                        btn.classList.add("correct");
+                    }
+                });
+    
+                refreshButton.style.display = "block";
+            });
+        });
+    
+        refreshButton.addEventListener("click", function() {
+            resultText.textContent = "";
+            resultText.style.transform = "";
+            
+            document.querySelectorAll(".option-button").forEach(btn => {
+                btn.disabled = false;
+                btn.classList.remove("correct");
+            });
+            
+            this.style.display = "none";
+        });
+    });
+</script>
+
+<!-- Testimonials Section -->
+<section class="testimonials" id="testimonials">
+    <h2 class="section-title">학습자들의 이야기</h2>
+    <div class="testimonial-grid" id="testimonialGrid">
+        <div class="testimonial-card">
+            <p class="testimonial-text">"차분하고 체계적인 학습 방식으로 프랑스어에 대한 두려움을 극복할 수 있었습니다."</p>
+            <p class="testimonial-author">- 강지수</p>
+        </div>
+        <div class="testimonial-card">
+            <p class="testimonial-text">"한국어를 배우며 새로운 시각으로 세상을 바라보게 되었습니다."</p>
+            <p class="testimonial-author">- Laurent Bailly</p>
+        </div>
+    </div>
+</section>
+
+<section id="location" class="location-section">
+    <div class="location-container">
+        <h2 class="section-title" data-lang-key="nav-location">오시는 길</h2>
+        
+        <div class="location-content">
+            <div class="map-container">
+                <div id="map" class="map-area"></div>
+                
+                <div class="map-buttons">
+                    <a href="https://map.naver.com/p/entry/place/1234567890?c=15.00,0,0,0,dh" target="_blank" class="map-button naver">
+                        <span class="map-icon">🗺️</span>
+                        네이버 지도에서 보기
+                    </a>
+                    <a href="https://www.google.com/maps/place/서울+영등포구+63로+32+라이프콤비+오피스텔" target="_blank" class="map-button google">
+                        <span class="map-icon">🌎</span>
+                        구글 지도에서 보기
+                    </a>
+                </div>
+            </div>
+
+            <div class="location-details">
+                <div class="address-info">
+                    <h3>상세 주소</h3>
+                    <p>서울 영등포구 63로 32 라이프콤비 오피스텔 619호</p>
+                </div>
+
+                <div class="transport-info">
+                    <h3>대중교통 안내</h3>
+                    <ul>
+                        <li>
+                            <strong>지하철</strong>
+                            <p>1호선 영등포역 하차, 도보 10분</p>
+                        </li>
+                        <li>
+                            <strong>버스</strong>
+                            <p>영등포구청역 정류장 하차</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="contact-info">
+                    <h3>연락처</h3>
+                    <p>📞 02-1234-5678</p>
+                    <p>✉️ contact@ko.planet.com</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .location-section {
+        padding: 100px 0;
+        background-color: #f9f9f9;
+    }
+
+    .location-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 15px;
+    }
+
+    .section-title {
+        text-align: center;
+        margin-bottom: 50px;
+        font-size: 2.5rem;
+        color: #333;
+    }
+
+    .location-content {
+        display: flex;
+        gap: 40px;
+        background-color: white;
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        padding: 50px;
+    }
+
+    .map-container {
+        flex: 1.5;
+    }
+
+    .map-area {
+        width: 100%;
+        height: 600px; /* 세로 길이를 600px로 늘림 */
+        background-color: #e9e9e9;
+        border-radius: 10px;
+        margin-bottom: 30px;
+    }
+
+    .map-buttons {
+        display: flex;
+        gap: 20px;
+    }
+
+    .map-button {
+        flex: 1;
+        padding: 15px;
+        text-align: center;
+        text-decoration: none;
+        background-color: #f0f0f0;
+        color: #333;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .map-button:hover {
+        background-color: #e0e0e0;
+        transform: scale(1.05);
+    }
+
+    .location-details {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .location-details h3 {
+        border-bottom: 3px solid #4a90e2;
+        padding-bottom: 15px;
+        margin-bottom: 20px;
+        color: #333;
+        font-size: 1.3rem;
+    }
+
+    .address-info, 
+    .transport-info, 
+    .contact-info {
+        background-color: #f8f8f8;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+
+    .transport-info ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .transport-info li {
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .transport-info li strong {
+        min-width: 80px;
+        display: inline-block;
+        color: #4a90e2;
+    }
+
+    .contact-info p {
+        margin: 15px 0;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .contact-info p i {
+        color: #4a90e2;
+        margin-right: 10px;
+    }
+
+    @media (max-width: 768px) {
+        .location-content {
+            flex-direction: column;
+            padding: 30px;
+        }
+
+        .map-area {
+            height: 350px;
+        }
+    }
+</style>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-nav">
+            <a href="#hero">News</a>
+            <a href="#courses">Learning Languages</a>
+            <a href="#testimonials">Community</a>
+            <a href="#location">How to get here</a>
+            <p class="small-text">주소: 서울 영등포구 63로 32 라이프콤비 오피스텔 619호</p>
+            <p class="small-text">사업자등록번호: 1234-5678-910</p>
+            <p class="small-text">대표전화: 010-1234-5678</p>
+            <p class="small-text">본 사이트의 컨텐츠는 저작권법의 보호를 받는 바 무단 전재, 복사, 배포 등을 금합니다.</p>
+            <p class="small-text">© 2024 한불 언어마을 - Ko.planet</p>
+            <p class="small-text">대표: 나미애</p>
+            <p class="small-text">웹 관리자: 김재현</p>
+        </div>
+        <div class="footer-links">
+            <a href="#" class="small-text">Vlog</a>
+            <a href="#" class="small-text">Instagram</a>
+        </div>
+        <button class="cta-button" onclick="openContactModal()">문의하기</button>
+    </div>
+</footer>
+
+<style>
+    .small-text {
+        font-size: 0.8rem;
+    }
+
+    .footer-nav {
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-nav a {
+        color: #fff;
+        text-decoration: none;
+        margin: 0 1rem;
+        font-size: 0.9rem;
+        transition: color 0.3s ease;
+    }
+
+    .footer-nav a:hover {
+        color: #ddd;
+    }
+</style>
+
+<!-- Contact Modal -->
+<div id="contactModal" class="contact-modal">
+    <div class="contact-form">
+        <button type="button" class="close-btn" onclick="closeContactModal()">×</button>
+        <div class="contact-header">
+            <h2>문의하기</h2>
+            <p>궁금하신 점을 남겨주세요</p>
+        </div>
+        <form id="contactForm" onsubmit="event.preventDefault(); handleContactSubmit();">
+            <div class="form-group">
+                <input type="text" id="contactName" class="form-input" placeholder="이름" required>
+            </div>
+            <div class="form-group">
+                <input type="email" id="contactEmail" class="form-input" placeholder="이메일" required>
+            </div>
+            <div class="form-group">
+                <textarea id="contactMessage" class="form-input" placeholder="문의 내용을 입력해주세요" required></textarea>
+            </div>
+            <div class="contact-buttons">
+                <button type="submit" class="contact-btn submit">보내기</button>
+                <button type="button" class="contact-btn cancel" onclick="closeContactModal()">취소</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- 모바일 위젯 섹션 추가 -->
+<div class="mobile-widget">
+    <div class="mobile-widget-container">
+        <div class="mobile-widget-header">
+            <h3>빠른 학습 메뉴</h3>
+            <button class="widget-toggle">
+                <span class="widget-icon">🌐</span>
+            </button>
+        </div>
+        
+        <div class="mobile-widget-content">
+            <div class="widget-quick-actions">
+                <button class="quick-action-btn">
+                    <i class="icon">📚</i>
+                    오늘의 학습
+                </button>
+                <button class="quick-action-btn">
+                    <i class="icon">🗣️</i>
+                    회화 연습
+                </button>
+                <button class="quick-action-btn">
+                    <i class="icon">🏆</i>
+                    진도 확인
+                </button>
+            </div>
+            
+            <div class="widget-language-selector">
+                <label for="language-select">학습 언어 선택:</label>
+                <select id="language-select">
+                    <option value="french">프랑스어</option>
+                    <option value="korean">한국어</option>
+                </select>
+            </div>
+            
+            <div class="widget-daily-challenge">
+                <h4>오늘의 도전 과제</h4>
+                <p>10개의 새로운 단어 학습하기</p>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .mobile-widget {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1000;
+        max-width: 300px;
+        width: 90%;
+        background-color: rgba(255, 255, 255, 0.95);
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: all 0.3s ease;
+        transform: translateY(100%);
+        opacity: 0;
+    }
+
+    .mobile-widget.active {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    .mobile-widget-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        background-color: #f4f4f4;
+    }
+
+    .widget-toggle {
+        background: none;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+    }
+
+    .mobile-widget-content {
+        padding: 15px;
+    }
+
+    .widget-quick-actions {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+    .quick-action-btn {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: none;
+        border: 1px solid #e0e0e0;
+        border-radius: 10px;
+        padding: 10px;
+        width: 30%;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .quick-action-btn:hover {
+        background-color: #f0f0f0;
+    }
+
+    .quick-action-btn .icon {
+        font-size: 24px;
+        margin-bottom: 5px;
+    }
+
+    .widget-language-selector {
+        margin-bottom: 20px;
+    }
+
+    .widget-language-selector select {
+        width: 100%;
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #e0e0e0;
+    }
+
+    .widget-daily-challenge {
+        background-color: #f9f9f9;
+        padding: 15px;
+        border-radius: 10px;
+    }
+
+    .progress-bar {
+        height: 10px;
+        background-color: #e0e0e0;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+
+    .progress {
+        height: 100%;
+        background-color: #4CAF50;
+        transition: width 0.5s ease;
+    }
+
+    @media (max-width: 600px) {
+        .mobile-widget {
+            width: calc(100% - 40px);
+            max-width: none;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const mobileWidget = document.querySelector('.mobile-widget');
+        const widgetToggle = document.querySelector('.widget-toggle');
+        const languageSelect = document.getElementById('language-select');
+        const dailyChallenge = document.querySelector('.widget-daily-challenge .progress');
+
+        widgetToggle.addEventListener('click', function() {
+            mobileWidget.classList.toggle('active');
+        });
+
+        languageSelect.addEventListener('change', function() {
+            // 언어 선택 시 추가 로직 구현 가능
+            console.log('Selected language:', this.value);
+        });
+
+        // 오늘의 도전 과제 진행 상황 시뮬레이션
+        function updateDailyChallenge() {
+            const progress = Math.min(Math.random() * 100, 100);
+            dailyChallenge.style.width = `${progress}%`;
+        }
+
+        updateDailyChallenge();
+    });
+</script>
+
+<style>
+    .mobile-menu-toggle {
+        display: none;
+        flex-direction: column;
+        justify-content: space-around;
+        width: 30px;
+        height: 25px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        z-index: 1000;
+    }
+
+    .mobile-menu-toggle span {
+        width: 100%;
+        height: 3px;
+        background-color: #333;
+        transition: all 0.3s ease;
+    }
+
+    .mobile-side-menu {
+        position: fixed;
+        top: 0;
+        right: -300px;
+        width: 300px;
+        height: 100%;
+        background-color: white;
+        box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+        transition: right 0.3s ease;
+        z-index: 1500;
+        overflow-y: auto;
+    }
+
+    .mobile-side-menu.open {
+        right: 0;
+    }
+
+    .mobile-menu-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        border-bottom: 1px solid #eee;
+    }
+
+    .mobile-menu-logo {
+        height: 50px;
+    }
+
+    .mobile-menu-close {
+        background: none;
+        border: none;
+        font-size: 30px;
+        cursor: pointer;
+    }
+
+    .mobile-menu-content {
+        padding: 20px;
+    }
+
+    .mobile-menu-links {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-bottom: 30px;
+    }
+
+    .mobile-menu-links a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        color: #333;
+        font-size: 16px;
+    }
+
+    .mobile-menu-actions {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 30px;
+    }
+
+    .mobile-login-btn, 
+    .mobile-signup-btn {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ddd;
+        background: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .mobile-menu-language {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .language-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .language-btn {
+        padding: 8px 15px;
+        border: 1px solid #ddd;
+        background: none;
+        cursor: pointer;
+    }
+
+    .language-btn.active {
+        background-color: #f0f0f0;
+    }
+
+    .mobile-menu-footer {
+        text-align: center;
+        padding: 15px;
+        border-top: 1px solid #eee;
+        font-size: 12px;
+        color: #888;
+    }
+
+    @media (max-width: 768px) {
+        .navbar .nav-links,
+        .navbar .search-container,
+        .navbar .login-button {
+            display: none;
+        }
+
+        .mobile-menu-toggle {
+            display: flex;
+        }
+
+        .mobile-menu-language .language-buttons {
+            gap: 8px;
+        }
+
+        .mobile-menu-language .language-btn {
+            padding: 8px 15px;
+            font-size: 0.9rem;
+            border-width: 1px;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+        const mobileSideMenu = document.querySelector('.mobile-side-menu');
+        const mobileMenuClose = document.querySelector('.mobile-menu-close');
+        const languageButtons = document.querySelectorAll('.language-btn');
+
+        mobileMenuToggle.addEventListener('click', function() {
+            mobileSideMenu.classList.add('open');
+        });
+
+        mobileMenuClose.addEventListener('click', function() {
+            mobileSideMenu.classList.remove('open');
+        });
+
+        languageButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                languageButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // 모바일 사이드 메뉴 바깥 터치 시 메뉴 닫기
+        document.addEventListener('click', function(event) {
+            if (
+                mobileSideMenu.classList.contains('open') && 
+                !mobileSideMenu.contains(event.target) && 
+                !mobileMenuToggle.contains(event.target)
+            ) {
+                mobileSideMenu.classList.remove('open');
+            }
+        });
+    });
+</script>
+
+<style>
+    .mobile-search-container {
+        margin-bottom: 20px;
+        padding: 0 15px;
+    }
+
+    .mobile-search-wrapper {
+        display: flex;
+        align-items: center;
+        border: 1px solid #e0e0e0;
+        border-radius: 25px;
+        overflow: hidden;
+    }
+
+    .mobile-search-bar {
+        flex-grow: 1;
+        padding: 10px 15px;
+        border: none;
+        outline: none;
+        font-size: 16px;
+    }
+
+    .mobile-search-button {
+        background: none;
+        border: none;
+        padding: 10px 15px;
+        cursor: pointer;
+        font-size: 20px;
+    }
+
+    .mobile-search-results {
+        margin-top: 10px;
+        max-height: 200px;
+        overflow-y: auto;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        padding: 10px;
+    }
+</style>
+
+<script>
+    function handleMobileSearch() {
+        const searchInput = document.querySelector('.mobile-search-bar');
+        const searchResults = document.getElementById('mobile-search-results');
+        const searchTerm = searchInput.value.trim().toLowerCase();
+
+        // 검색 로직 구현 (예시)
+        const searchableContent = [
+            { title: '프랑스어 기초 코스', link: '#courses' },
+            { title: '한국어 중급 코스', link: '#courses' },
+            { title: '문화 교류 프로그램', link: '#testimonials' },
+            { title: '오시는 길', link: '#location' }
+        ];
+
+        const results = searchableContent.filter(item => 
+            item.title.toLowerCase().includes(searchTerm)
+        );
+
+        // 검색 결과 표시
+        if (results.length > 0) {
+            searchResults.innerHTML = results.map(result => 
+                `<div class="search-result-item">
+                    <a href="${result.link}">${result.title}</a>
+                </div>`
+            ).join('');
+        } else {
+            searchResults.innerHTML = '<p>검색 결과가 없습니다.</p>';
+        }
+    }
+
+    // 모바일 검색 이벤트 리스너 추가
+    document.addEventListener('DOMContentLoaded', function() {
+        const mobileSideSearchForm = document.getElementById('mobileSideSearchForm');
+        
+        mobileSideSearchForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            handleMobileSearch();
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const languageButtons = document.querySelectorAll('.language-btn');
+        
+        // 언어 변경 함수
+        function changeLanguage(lang) {
+            // 페이지의 언어별 텍스트 매핑
+            const translations = {
+                ko: {
+                    'hero-tagline': '자신의 속도에 맞춰 배우세요',
+                    'nav-news': '뉴스',
+                    'nav-courses': '학습 코스',
+                    'nav-community': '커뮤니티',
+                    'nav-location': '오시는 길',
+                    'login-button': '로그인',
+                    'signup-button': '회원가입'
+                },
+                fr: {
+                    'hero-tagline': 'Apprenez à votre rythme',
+                    'nav-news': 'Actualités',
+                    'nav-courses': 'Cours',
+                    'nav-community': 'Communauté',
+                    'nav-location': 'Comment venir',
+                    'login-button': 'Connexion',
+                    'signup-button': 'Inscription'
+                },
+                en: {
+                    'hero-tagline': 'Learn at your own pace',
+                    'nav-news': 'News',
+                    'nav-courses': 'Courses',
+                    'nav-community': 'Community',
+                    'nav-location': 'How to get here',
+                    'login-button': 'Login',
+                    'signup-button': 'Sign Up'
+                }
+            };
+
+            // 선택된 언어의 번역 적용
+            const currentTranslations = translations[lang];
+            
+            // 각 요소의 텍스트 업데이트
+            Object.keys(currentTranslations).forEach(key => {
+                const elements = document.querySelectorAll(`[data-lang-key="${key}"]`);
+                elements.forEach(element => {
+                    element.textContent = currentTranslations[key];
+                });
+            });
+
+            // 로컬 스토리지에 언어 저장
+            localStorage.setItem('selectedLanguage', lang);
+        }
+
+        // 언어 버튼 클릭 이벤트
+        languageButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // 활성 버튼 토글
+                languageButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+
+                // 선택된 언어로 변경
+                const selectedLang = this.getAttribute('data-lang');
+                changeLanguage(selectedLang);
+            });
+        });
+
+        // 페이지 로드 시 이전에 선택된 언어 복원
+        const savedLanguage = localStorage.getItem('selectedLanguage') || 'ko';
+        const savedLanguageButton = document.querySelector(`.language-btn[data-lang="${savedLanguage}"]`);
+        
+        if (savedLanguageButton) {
+            savedLanguageButton.click();
+        }
+    });
+</script>
+
+<style>
+    .mobile-menu-language {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .language-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .language-btn {
+        padding: 8px 15px;
+        border: 1px solid #ddd;
+        background: none;
+        cursor: pointer;
+    }
+
+    .language-btn.active {
+        background-color: #f0f0f0;
+    }
+</style>
+
+<style>
+    .desktop-language-selector {
+        display: flex;
+        align-items: center;
+        margin: 0 15px;
+        background-color: #f5f5f5;
+        border-radius: 30px;
+        padding: 5px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .desktop-language-selector .language-buttons {
+        display: flex;
+        gap: 5px;
+    }
+
+    .desktop-language-selector .language-btn {
+        background: transparent;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        color: #666;
+        font-weight: 500;
+        position: relative;
+        overflow: hidden;
+        font-size: 1rem;  /* 데스크탑에서는 기본 폰트 크기 유지 */
+    }
+
+    .desktop-language-selector .language-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(74, 144, 226, 0.1);
+        transform: scale(0);
+        border-radius: 25px;
+        transition: transform 0.3s ease;
+        z-index: -1;
+    }
+
+    .desktop-language-selector .language-btn:hover::before {
+        transform: scale(1);
+    }
+
+    .desktop-language-selector .language-btn.active {
+        background-color: #4a90e2;
+        color: white;
+        box-shadow: 0 2px 5px rgba(74, 144, 226, 0.3);
+    }
+
+    .desktop-language-selector .language-btn.active::before {
+        background-color: transparent;
+    }
+
+    .desktop-language-selector .language-btn:hover {
+        color: #4a90e2;
+    }
+
+    /* 모바일 언어 선택 버튼 스타일 */
+    .mobile-menu-language .language-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .mobile-menu-language .language-btn {
+        padding: 10px 20px;
+        border: 2px solid #e0e0e0;
+        border-radius: 25px;
+        background: transparent;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .mobile-menu-language .language-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(74, 144, 226, 0.1);
+        transform: scale(0);
+        transition: transform 0.3s ease;
+        z-index: -1;
+    }
+
+    .mobile-menu-language .language-btn:hover::before {
+        transform: scale(1);
+    }
+
+    .mobile-menu-language .language-btn.active {
+        background-color: #4a90e2;
+        color: white;
+        border-color: #4a90e2;
+    }
+
+    .mobile-menu-language .language-btn:hover {
+        border-color: #4a90e2;
+        color: #4a90e2;
+    }
+
+    /* 모바일 화면에서 데스크탑 언어 선택기 숨기기 */
+    @media (max-width: 768px) {
+        .desktop-language-selector {
+            display: none;
+        }
+    }
+
+    /* 모바일 메뉴에서 언어 선택 버튼 스타일 유지 */
+    @media (max-width: 768px) {
+        .mobile-menu-language .language-buttons {
+            gap: 8px;
+        }
+
+        .mobile-menu-language .language-btn {
+            padding: 8px 15px;
+            font-size: 0.9rem;
+            border-width: 1px;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const languageButtons = document.querySelectorAll('.language-btn');
+        
+        // 언어 변경 함수
+        function changeLanguage(lang) {
+            // 페이지의 언어별 텍스트 매핑
+            const translations = {
+                ko: {
+                    'hero-tagline': '자신의 속도에 맞춰 배우세요',
+                    'nav-news': '뉴스',
+                    'nav-courses': '학습 코스',
+                    'nav-community': '커뮤니티',
+                    'nav-location': '오시는 길',
+                    'login-button': '로그인',
+                    'signup-button': '회원가입'
+                },
+                fr: {
+                    'hero-tagline': 'Apprenez à votre rythme',
+                    'nav-news': 'Actualités',
+                    'nav-courses': 'Cours',
+                    'nav-community': 'Communauté',
+                    'nav-location': 'Comment venir',
+                    'login-button': 'Connexion',
+                    'signup-button': 'Inscription'
+                },
+                en: {
+                    'hero-tagline': 'Learn at your own pace',
+                    'nav-news': 'News',
+                    'nav-courses': 'Courses',
+                    'nav-community': 'Community',
+                    'nav-location': 'How to get here',
+                    'login-button': 'Login',
+                    'signup-button': 'Sign Up'
+                }
+            };
+
+            // 선택된 언어의 번역 적용
+            const currentTranslations = translations[lang];
+            
+            // 각 요소의 텍스트 업데이트
+            Object.keys(currentTranslations).forEach(key => {
+                const elements = document.querySelectorAll(`[data-lang-key="${key}"]`);
+                elements.forEach(element => {
+                    element.textContent = currentTranslations[key];
+                });
+            });
+
+            // 로컬 스토리지에 언어 저장
+            localStorage.setItem('selectedLanguage', lang);
+        }
+
+        // 언어 버튼 클릭 이벤트
+        languageButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // 활성 버튼 토글
+                languageButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+
+                // 선택된 언어로 변경
+                const selectedLang = this.getAttribute('data-lang');
+                changeLanguage(selectedLang);
+            });
+        });
+
+        // 페이지 로드 시 이전에 선택된 언어 복원
+        const savedLanguage = localStorage.getItem('selectedLanguage') || 'ko';
+        const savedLanguageButton = document.querySelector(`.language-btn[data-lang="${savedLanguage}"]`);
+        
+        if (savedLanguageButton) {
+            savedLanguageButton.click();
+        }
+    });
+</script>
+
+<style>
+    .course-card h3,
+    .course-card p,
+    .quiz-section h2,
+    .quiz-question p {
+        text-align: center;
+    }
+
+    .course-info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .quiz-question p {
+        margin-bottom: 20px;
+    }
+
+    .french-sentence {
+        text-align: center;
+        display: flex;
+        justify-content: center;
+    }
+</style>
+
+
+
+
+
